@@ -1,0 +1,155 @@
+<div class="container">
+
+    <!-- Start Content-->
+    <div class="container-fluid">
+        <form [formGroup]="projetForm" (submit)="onAjouter()">
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="mb-3">
+                                        <label for="projectname" class="form-label">Nom du projet</label>
+                                        <input type="text" id="projectname" class="form-control"
+                                            placeholder="Saisir le nom du projet" formControlName="nom">
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="nom && nom.invalid">
+                                        ce champ d'entrée n'est pas valide
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="projectname" class="form-label">Lieu</label>
+                                        <input type="text" id="projectname" class="form-control"
+                                            placeholder="Saisir le nom du projet" formControlName="lieu">
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="lieu && lieu.invalid">
+                                        ce champ d'entrée n'est pas valide
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="project-overview" class="form-label">Description</label>
+                                        <textarea class="form-control" id="project-overview" rows="5"
+                                            placeholder="Saisir quelques brèves sur le projet.."
+                                            formControlName="description"></textarea>
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="description && description.invalid">
+                                        ce champ d'entrée n'est pas valide
+                                    </div>
+
+                                    <!-- Date View -->
+                                    <div class="mb-3 position-relative" id="datepicker1">
+                                        <label class="form-label">Date de début</label>
+                                        <input type="date" class="form-control" data-provide="datepicker"
+                                            data-date-container="#datepicker1" data-date-format="d-M-yyyy"
+                                            data-date-autoclose="true" formControlName="start_date">
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="start_date && start_date.invalid">
+                                        ce champ d'entrée n'est pas valide
+                                    </div>
+
+
+                                    <label for="project-budget" class="form-label">Budget</label>
+
+                                    <div class="mb-3 input-group">
+
+                                        <input type="number" id="project-budget" class="form-control"
+                                            laceholder="Saisir le budget du projet" formControlName="budget">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">Dinars</span>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="budget && budget.invalid">
+                                        ce champ d'entrée n'est pas valide
+                                    </div>
+
+                                    <div class="mb-0" data-select2-id="select2-data-5-81dz">
+                                        <label for="project-overview" class="form-label">les chef du projets</label>
+
+                                        <select class="form-control select2 select2-hidden-accessible"
+                                            data-toggle="select2" data-select2-id="select2-data-1-pd48" tabindex="-1"
+                                            aria-hidden="true" formControlName="chefProjetId">
+                                            <option *ngFor="let t of chefProjets" [value]="t.id"
+                                                data-select2-id="select2-data-7-nymj">{{t.nom}} {{t.prenom}}</option>
+
+                                        </select>
+
+
+                                        <div class="mt-2" id="tooltip-container">
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" class="d-inline-block"
+                                                aria-label="Mat Helme" data-bs-original-title="Mat Helme">
+                                                <img src="assets/images/users/avatar-6.jpg"
+                                                    class="rounded-circle avatar-xs" alt="friend">
+                                            </a>
+
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" class="d-inline-block"
+                                                aria-label="Michael Zenaty" data-bs-original-title="Michael Zenaty">
+                                                <img src="assets/images/users/avatar-7.jpg"
+                                                    class="rounded-circle avatar-xs" alt="friend">
+                                            </a>
+
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" class="d-inline-block"
+                                                aria-label="James Anderson" data-bs-original-title="James Anderson">
+                                                <img src="assets/images/users/avatar-8.jpg"
+                                                    class="rounded-circle avatar-xs" alt="friend">
+                                            </a>
+
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" class="d-inline-block"
+                                                aria-label="Lorene Block" data-bs-original-title="Lorene Block">
+                                                <img src="assets/images/users/avatar-4.jpg"
+                                                    class="rounded-circle avatar-xs" alt="friend">
+                                            </a>
+
+                                            <a href="javascript:void(0);" data-bs-container="#tooltip-container"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" class="d-inline-block"
+                                                aria-label="Mike Baker" data-bs-original-title="Mike Baker">
+                                                <img src="assets/images/users/avatar-5.jpg"
+                                                    class="rounded-circle avatar-xs" alt="friend">
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                </div> <!-- end col-->
+
+                                <div class="col-xl-6">
+                                    <!-- File chooser -->
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">choisir le plan d'image</label>
+                                        <input id="formFile" class="form-control" type="file" class="p-inputtext"
+                                            accept="image/*" />
+                                    </div>
+
+                                    <!-- Date View -->
+                                    <div class="mb-3 position-relative" id="datepicker2">
+                                        <label class="form-label">date de fin </label>
+                                        <input type="date" class="form-control" formControlName="end_date"
+                                            data-provide="datepicker" data-date-container="#datepicker2"
+                                            data-date-format="d-M-yyyy" data-date-autoclose="true">
+                                    </div>
+                                    <div class="alert alert-danger" *ngIf="end_date && end_date.invalid">
+                                        ce champ d'entrée n'est pas valide
+                                    </div>
+                                    <button class="btn btn-primary">Ajouter</button>
+
+                                </div> <!-- end col-->
+
+                            </div>
+                            <!-- end row -->
+
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card-->
+                </div> <!-- end col-->
+            </div>
+            <!-- end row-->
+        </form>
+    </div> <!-- container -->
+
+</div>

@@ -1,0 +1,13 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h3>Admin Dashboard</h3>
+  </div>
+  <ul class="list-unstyled components">
+    <li *ngFor="let menu of menus" [ngClass]="{'active': menu.active}">
+      <a [routerLink]="menu.route">
+        <i class="fas fa-fw {{menu.icon}}"></i>
+        {{menu.name}}
+      </a>
+    </li>
+  </ul>
+</nav>

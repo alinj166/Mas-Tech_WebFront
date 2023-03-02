@@ -1,0 +1,56 @@
+.navbar {
+  height: 60px;
+  border-bottom: 1px solid #ddd;
+
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar-toggler {
+  border: none;
+}
+
+.navbar-toggler-icon {
+  background-image: url('../../../favicon.ico');
+  height: 24px;
+  width: 24px;
+}
+
+.nav-item {
+  margin-left: 20px;
+}
+
+.dropdown-menu {
+  margin-top: 10px;
+  border-radius: 0;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  font-size: 16px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #eee;
+  color: #333;
+}
+
+.dropdown-divider {
+  margin: 0;
+}
+
+.nav-link {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #ffc107;
+}
