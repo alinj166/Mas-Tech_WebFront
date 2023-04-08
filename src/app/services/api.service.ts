@@ -2,8 +2,11 @@
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Projet } from '../models/projet';
+import { Chantier } from '../models/chantier';
 import { chefProjet } from '../models/ChefProjet';
+import { Etage } from '../models/etage';
+import { Plan } from '../models/plan';
+import { ChefChantier } from '../models/chef-chantier';
 
 const URL=environment.apiUrl;
 
@@ -25,44 +28,54 @@ export class ApiService {
 
 
 
-// Get All projets
- public getAllProjet():Observable <Projet[]> {
-  return this.http.get<Projet[]>(URL+'/projets')
+// Get All getAllChantier
+ public getAllChantier():Observable <Chantier[]> {
+  return this.http.get<Chantier[]>(URL+'/chantiers')
   
 }
 
 
-// Get  projets by Id
-public getProjetById(id:string):Observable <Projet> {
-  return this.http.get<Projet>(URL+'/projets/'+id)
+// Get  chantiers by Id
+public getChantierById(id:string):Observable <Chantier> {
+  return this.http.get<Chantier>(URL+'/chantiers/'+id)
   
 }
-// Add projet
-public addProjet(service:Projet):Observable <Projet> {
-  return this.http.post<Projet>(URL+'/projets',service); 
-}
-
-// Delete projet 
-public deleteProjet(id:number) {
-  return this.http.delete<Projet>(URL+'/Projets/'+id);
+// Delete chantier 
+public deleteChantier(id:number) {
+  return this.http.delete<Chantier>(URL+'/chantiers/'+id);
 
 }
 
-// put Projet
-public putProjet(service:Projet,id:string):Observable <chefProjet> {
-  return this.http.put<Projet>(URL+'/Projets/'+id,service,requestOptions);
+// put Chantier
+public putChantier(service:Chantier,id:string):Observable <Chantier> {
+  return this.http.put<Chantier>(URL+'/chantiers/'+id,service,requestOptions);
 }
+// cloturer Chantier
+public cloturerChantier(id:string):Observable <Chantier> {
+  return this.http.put<Chantier>(URL+'/chantiers/'+id+"/cloturer",requestOptions);
+}
+
 // Get ALL chefProjet
 public getAllChefProjet():Observable <chefProjet[]> {
   return this.http.get<chefProjet[]>(URL+'/chefProjets')
-
-
-
+}
+// Get ALL chefChantier
+public getAllChefChantier():Observable <ChefChantier[]> {
+  return this.http.get<ChefChantier[]>(URL+'/chefChantiers')
 }
 
+// Get chefProjet By id 
+public getChefProjetById(id:any):Observable <chefProjet> {
+  return this.http.get<chefProjet>(URL+'/chefProjets/'+id)
+}
 // Add ChefProjet
 public addChefProjet(service:chefProjet):Observable <chefProjet> {
   return this.http.post<chefProjet>(URL+'/chefProjets',service,requestOptions) 
+   
+}
+// Add ChefProjet
+public addChefChantier(service:ChefChantier):Observable <ChefChantier> {
+  return this.http.post<ChefChantier>(URL+'/chefChantiers',service,requestOptions) 
    
 }
 
@@ -70,18 +83,37 @@ public addChefProjet(service:chefProjet):Observable <chefProjet> {
 public putChefProjet(service:chefProjet,id:number):Observable <chefProjet> {
   return this.http.put<chefProjet>(URL+'/chefProjets/'+id,service,requestOptions);
 }
+// put ChefChantier
+public putChefChantier(service:ChefChantier,id:number):Observable <ChefChantier> {
+  return this.http.put<ChefChantier>(URL+'/chefChantiers/'+id,service,requestOptions);
+}
 
 // Delete chefProjet
  public deleteChefProjet(id:number):Observable <chefProjet> {
   return this.http.delete<chefProjet>(URL+'/chefProjets/'+id );
 
 }
-// Get ALL chefProjet
-public getAllProjetByChef(id:any):Observable <Projet[]> {
-  return this.http.get<Projet[]>(URL+'/chefProjets/'+id+'/projets');
-  
+// Delete chefChantier
+public deleteChefChantier(id:number):Observable <ChefChantier> {
+  return this.http.delete<ChefChantier>(URL+'/chefChantiers/'+id );
 
+}
+// Get ALL Chantiers by chef
+public getAllChantierByChef(id:any):Observable <Chantier[]> {
+  return this.http.get<Chantier[]>(URL+'/chefProjets/'+id+'/chantiers');
+}
+// Get ALL Chantiers by chef
+public getAllEtageByChantier(id:any):Observable <Etage[]> {
+  return this.http.get<Etage[]>(URL+'/chantiers/'+id+'/etages');
+}
+// Get plan by etage
+public getPlanByEtage(id:any):Observable <Plan> {
+  return this.http.get<Plan>(URL+'/etages/'+id+'/plan');
 
+}
+// Post plan 
+public postPlan(service:any):Observable <any> {
+  return this.http.post<any>(URL+'/plans',service);
 
 }
 }

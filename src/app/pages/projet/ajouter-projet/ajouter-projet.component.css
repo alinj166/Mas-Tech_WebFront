@@ -1,8 +1,0 @@
-.dropzone .dz-message {
-    text-align: center;
-    margin: 2rem 0
-}
-
-.dropzone.dz-started .dz-message {
-    display: none
-}

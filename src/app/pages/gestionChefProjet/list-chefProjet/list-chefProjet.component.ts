@@ -1,30 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+
 import { MatDialog } from '@angular/material/dialog';
 import { chefProjet } from 'src/app/models/ChefProjet';
-import { Projet } from 'src/app/models/projet';
+import { Chantier } from 'src/app/models/chantier';
 import { ApiService } from 'src/app/services/api.service';
-import { forEachChild } from 'typescript';
-import { AddChefProjetComponent } from '../add-chef-projet/add-chef-projet.component';
+import { ModalBoxChefProjetComponent } from '../modal-box-chef-projet/modal-box-chef-projet.component';
 
 @Component({
-  selector: 'app-list-chef',
-  templateUrl: './list-chef.component.html',
-  styleUrls: ['./list-chef.component.css'],
+  selector: 'app-list-chefProjet',
+  templateUrl: './list-chefProjet.component.html',
+  styleUrls: ['./list-chefProjet.component.css'],
   template: '<div *ngFor="let name of filteredNames">{{ name }}</div>',
 })
-export class ListChefComponent implements OnInit {
+export class ListChefProjetComponent implements OnInit {
   constructor(private api: ApiService, private dialog: MatDialog) {}
   chefProjets: chefProjet[] = [];
-  projets: Projet[] = [];
+  chantiers: Chantier[] = [];
+  pageSizeChefProjet= 5; // the number of items per page
+  pageChefProjet = 1;
+
 
   ngOnInit(): void {
     this.getAllChefProjet();
+
   }
 
   //Delete chefProjet
@@ -43,7 +41,7 @@ export class ListChefComponent implements OnInit {
   EditDialog(row: any) {
     {
       this.dialog
-        .open(AddChefProjetComponent, {
+        .open(ModalBoxChefProjetComponent, {
           width: '500px',
           data: row,
         })
@@ -56,7 +54,7 @@ export class ListChefComponent implements OnInit {
   //Open dialog box and to add chefProjet
   openDialog() {
     this.dialog
-      .open(AddChefProjetComponent, {
+      .open(ModalBoxChefProjetComponent, {
         width: '500px',
       })
       .afterClosed()
@@ -65,15 +63,15 @@ export class ListChefComponent implements OnInit {
       });
   }
 
-  //get all project
+  //get all Chefprojet
   getAllChefProjet() {
     this.api.getAllChefProjet().subscribe((data) => {
       this.chefProjets = data;
       this.chefProjets.forEach((element) => {
         //to get all projects  affected to the chef by id
-        this.api.getAllProjetByChef(element.id).subscribe((data) => {
+        this.api.getAllChantierByChef(element.id).subscribe((data) => {
           data.forEach((e) => {
-            this.projets.push(e);
+            this.chantiers.push(e);
           });
         });
       });

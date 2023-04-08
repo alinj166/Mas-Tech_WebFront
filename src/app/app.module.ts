@@ -4,36 +4,38 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListChefComponent } from './pages/chef/list-chef/list-chef.component';
-import { ListProjetComponent } from './pages/projet/list-projet/list-projet.component';
-import { AjouterProjetComponent } from './pages/projet/ajouter-projet/ajouter-projet.component';
+import { ListProjetComponent } from './pages/chantier/list-chantier/list-chantier.component';
 import { ApiService } from './services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddChefProjetComponent } from './pages/chef/add-chef-projet/add-chef-projet.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
-import { EditProjetComponent } from './pages/projet/edit-projet/edit-projet.component';
 import { SideBarComponent } from './pages/side-bar/side-bar.component';
 import { NavBarComponent } from './pages/nav-bar/nav-bar.component';
-
+import { ListEtageComponent } from './pages/list-etage/list-etage.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ListChefProjetComponent } from './pages/gestionChefProjet/list-chefProjet/list-chefProjet.component';
+import { ListChefChantierComponent } from './pages/gestionChefChantier/list-chef-chantier/list-chef-chantier.component';
+import { ModalBoxChefProjetComponent } from './pages/gestionChefProjet/modal-box-chef-projet/modal-box-chef-projet.component';
+import { ModalBoxChefChantierComponent } from './pages/gestionChefChantier/modal-box-chef-chantier/modal-box-chef-chantier.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListChefComponent,
+    ListChefProjetComponent,
     ListProjetComponent,
-    AjouterProjetComponent,
-    AddChefProjetComponent,
-    EditProjetComponent,
+    ModalBoxChefProjetComponent,
+    ModalBoxChefChantierComponent,
     SideBarComponent,
     NavBarComponent,
-    
-    
+    ListEtageComponent,
+    ListChefChantierComponent,
   ],
+
   imports: [
+    NgxPaginationModule,
     ReactiveFormsModule,
+
     FormsModule,
     BrowserModule,
     AppRoutingModule,
@@ -41,6 +43,8 @@ import { NavBarComponent } from './pages/nav-bar/nav-bar.component';
     BrowserAnimationsModule,
     HttpClientModule,
     MatDialogModule,
+    NgxPaginationModule
+
     
 
 

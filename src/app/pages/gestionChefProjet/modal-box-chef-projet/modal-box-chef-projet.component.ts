@@ -1,17 +1,17 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 @Component({
-  selector: 'app-add-chef-projet',
-  templateUrl: './add-chef-projet.component.html',
-  styleUrls: ['./add-chef-projet.component.css']
+  selector: 'app-modal-box-chef-projet',
+  templateUrl: './modal-box-chef-projet.component.html',
+  styleUrls: ['./modal-box-chef-projet.component.css']
 })
 
 
-export class AddChefProjetComponent implements OnInit {
+export class ModalBoxChefProjetComponent implements OnInit {
   constructor(private api: ApiService,
-    private formBuilder: FormBuilder, @Inject(MAT_DIALOG_DATA) public editData: any, private dialogRef: MatDialogRef<AddChefProjetComponent>) { }
+ @Inject(MAT_DIALOG_DATA) public editData: any, private dialogRef: MatDialogRef<ModalBoxChefProjetComponent>) { }
   cinPassword!: string
   actionBtn: string = "ajouter"
   chefProjetForm = new FormGroup({
@@ -48,7 +48,7 @@ export class AddChefProjetComponent implements OnInit {
             this.dialogRef.close('save');
           },
           error: (err) => {
-            alert("Error lorsque l'ajout du chef");
+            alert("Error lorsque l'ajout du chef Projet");
 
             // }
           }

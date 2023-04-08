@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListChefComponent } from './pages/chef/list-chef/list-chef.component';
-import { AjouterProjetComponent } from './pages/projet/ajouter-projet/ajouter-projet.component';
-import { EditProjetComponent } from './pages/projet/edit-projet/edit-projet.component';
-import { ListProjetComponent } from './pages/projet/list-projet/list-projet.component';
+import { ListProjetComponent } from './pages/chantier/list-chantier/list-chantier.component';
+import { ListEtageComponent } from './pages/list-etage/list-etage.component';
+import { ListChefProjetComponent } from './pages/gestionChefProjet/list-chefProjet/list-chefProjet.component';
+import { ListChefChantierComponent } from './pages/gestionChefChantier/list-chef-chantier/list-chef-chantier.component';
 
 
 const routes: Routes = [
-  { path: 'listChef', component: ListChefComponent },
-  { path: '', redirectTo: 'listChef', pathMatch: 'full' },
-  { path: 'listProjet', component: ListProjetComponent },
-  { path: 'addProjet', component: AjouterProjetComponent },
-  { path: 'updateProjet/:id', component: EditProjetComponent },
-  { path: '**', component: ListChefComponent },
+  { path: '', redirectTo: 'listChefProjet', pathMatch: 'full' },
+  { path: 'listChefProjet', component: ListChefProjetComponent },
+  { path: 'listChefChantier', component: ListChefChantierComponent },
+  { path: 'listChantier', component: ListProjetComponent },
+  { path: 'listEtage', component: ListEtageComponent },
+  { path: '**', component: ListChefProjetComponent },
 ]
 
 @NgModule({
