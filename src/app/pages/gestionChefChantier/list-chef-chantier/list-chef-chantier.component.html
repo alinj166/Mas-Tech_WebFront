@@ -21,7 +21,6 @@
                         <th>CIN</th>
                         <th>Nom /Prénom</th>
                         <th>Num tel</th>
-                        <th>Projet Affecter</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -37,13 +36,7 @@
 
                         <td>{{ t.nom }} {{ t.prenom }}</td>
                         <td>{{ t.numTel }}</td>
-                        <td>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <ng-container *ngFor="let j of chantiers">
-                                    <option *ngIf="j.chefProjetId == t.id">{{ j.nom }}</option>
-                                </ng-container>
-                            </select>
-                        </td>
+                     
                         <td>
                             <div class="btn-group">
                                 <button class="edit btn btn-default" (click)="EditDialog(t)">

@@ -19,9 +19,5 @@ export class SideBarComponent implements OnInit {
     { name: 'Orders', route: '/orders', icon: 'fas-shopping-bag', active: false }
   ];
 
-  collapsed = false;
 
-  toggleSidebar() {
-    this.collapsed = !this.collapsed;
-  }
 }

@@ -17,8 +17,8 @@ export class ModalBoxChefChantierComponent implements OnInit {
     prenom: new FormControl('', Validators.required),
     nom: new FormControl('', Validators.required),
     numTel: new FormControl('', [Validators.required, Validators.pattern("^[0-9]*$")]),
-    cin: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern("^[0-9]*$")]),
-    password: new FormControl('')
+    cin: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern("^[0-9]*$")]),
+    password: new FormControl('',Validators.required)
   });
 
   updateChefChantier() {

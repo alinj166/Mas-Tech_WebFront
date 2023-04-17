@@ -80,7 +80,7 @@ public addChefChantier(service:ChefChantier):Observable <ChefChantier> {
 }
 
 // put ChefProjet
-public putChefProjet(service:chefProjet,id:number):Observable <chefProjet> {
+public  putChefProjet(service:chefProjet,id:number):Observable <chefProjet> {
   return this.http.put<chefProjet>(URL+'/chefProjets/'+id,service,requestOptions);
 }
 // put ChefChantier
@@ -114,8 +114,18 @@ public getPlanByEtage(id:any):Observable <Plan> {
 // Post plan 
 public postPlan(service:any):Observable <any> {
   return this.http.post<any>(URL+'/plans',service);
-
 }
+//affecte plan 
+public affecterPlan(idEtage:any,idPlan:any):Observable <Plan> {
+  return this.http.put<Plan>(URL+'/etages/'+idEtage+'/plans/'+idPlan,'');
+}
+
+//affecte ChefProjet 
+public affecterChefProjet(idChantier:any,idChefProjet:any):Observable <chefProjet> {
+  return this.http.put<chefProjet>(URL+'/chefProjets/'+idChefProjet+'/chantiers/'+idChantier,'');
+}
+
+
 }
 
 

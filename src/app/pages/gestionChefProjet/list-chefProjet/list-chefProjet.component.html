@@ -37,34 +37,27 @@
                         <td>{{ t.nom }} {{ t.prenom }}</td>
                         <td>{{ t.numTel }}</td>
                         <td>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                <ng-container *ngFor="let j of chantiers">
-                                    <option *ngIf="j.chefProjetId == t.id">{{ j.nom }}</option>
-                                </ng-container>
-                            </select>
+                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <ng-container *ngFor="let j of chantiers">
+                                            <option *ngIf="j.chefProjetId == t.id">{{ j.nom }}</option>
+                                        </ng-container>
+                                    </select>
+
+
                         </td>
                         <td>
                             <div class="btn-group">
                                 <button class="edit btn btn-default" (click)="EditDialog(t)">
                                     <i class="mdi mdi-pencil" title="Edit"></i>
                                 </button>
-                                <button class="delete btn btn-default" (click)="DeleteChefProjet(t.id)">
-                                    <i class="mdi mdi-delete" title="Delete"></i>
+                                <button class="delete btn btn-default"  >
+                                    <i class="mdi mdi-delete" title="Delete" data-toggle="modal" data-target="#deleteChefProjetModal"></i>
                                 </button>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="pagination">
-                <pagination-controls (pageChange)="pageChefProjet = $event"></pagination-controls>
-              </div>
-        </div>
-    </div>
-</div>
-
+                            
 <!-- Delete Modal HTML -->
-<div id="deleteChefProjetModal" class="modal fade">
+<div id="deleteChefProjetModal" class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="myModalLabelDelete"
+aria-hidden="true" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -79,8 +72,18 @@
             </div>
             <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
-                <input type="submit" class="btn btn-danger" value="Delete" />
+                <button type="submit" class="btn btn-danger" (click)="DeleteChefProjet(t.id)" >Supprimer</button>
             </div>
+        </div>
+    </div>
+</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <pagination-controls (pageChange)="pageChefProjet = $event"></pagination-controls>
+              </div>
         </div>
     </div>
 </div>

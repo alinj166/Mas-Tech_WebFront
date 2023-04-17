@@ -1,12 +1,12 @@
-import { Data } from "@angular/router";
 
 export class Chantier {
     constructor(
         public id?: number, 
         public nom?: string,
         public description?:String,
-        public date_debut?:Data,
         public date_fin?:Date,
+        public date_debut?:Date,
+
         public lieu?:String,
         public chefProjetId?:String,
         public chefChantierId?:String,

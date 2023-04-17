@@ -21,9 +21,10 @@
 							<p class="mb-1 pe-2 text-nowrap mb-2 d-inline-block">
 								<span>
 									<i class="mdi mdi-calendar-range text-muted"></i>
-									Date Debut: {{t.date_debut }}
+									Date Debut: {{t.date_debut| date: 'dd-MM-yyyy' }}
 								</span>
 							</p>
+							<p></p>
 							<P *ngIf="t.date_fin" class="mb-1 pe-2 text-nowrap mb-2 d-inline-block">
 			
 								<i class="mdi mdi-calendar-check text-muted"></i>
@@ -47,7 +48,7 @@
 	
 							<div class="dropdown-menu dropdown-menu-right">
 							
-								<button class="dropdown-item"  (click)="openPopup()" ><i class="mdi mdi-account-hard-hat " ></i>Affecter</button>
+								<button class="dropdown-item"   (click)="openModal(t.id)" ><i class="mdi mdi-account-hard-hat " ></i>Affecter</button>
 								<button class=" dropdown-item " style="color:rgb(255, 36, 36)" (click)="cloturerChantier(t.id)"><i class=" mdi mdi-close-circle-outline" ></i>Cloturer</button>
 
 							</div>
@@ -62,23 +63,42 @@
                             <div class="progress-bar" role="progressbar"      [style.width.%]="t.percentAvancement" [attr.aria-valuenow]="t.percentAvancement" aria-valuemin="0" aria-valuemax="100"></div>
 
                           </div>
-                        <div class="mt-3" style="font-size: 24px"> {{t.percentAvancement}}%</div>
+                        <div class="mt-3" *ngIf="t.percentAvancement" style="font-size: 24px"> {{t.percentAvancement}}%</div>
+						<div class="mt-3" *ngIf="!t.percentAvancement" style="font-size: 24px"> O%</div>
+
                     </div>
 					
                 </div>
-                <ng-container *ngFor="let j of listChefProjet">
-                    <div class="card-body px-4 pt-2" *ngIf="j.id== t.chefProjetId">
-                      <i *ngIf="!j.imageURL" class="mdi mdi-account-hard-hat "  style="font-size: 24px;" ></i>
-                      <img *ngIf="j.imageURL" [src]="j.imageURL" class="rounded-circle mr-1"
-                        alt="Avatar" width="28" height="28">{{ j.prenom }} {{ j.nom }}         
-                    </div>	
-              </ng-container>
+		
+				<ng-container *ngIf="isChefProjetExist(t.chefProjetId); else noChefProjet">
+					<!-- Display the article information -->
+					<div class="card-body px-4 pt-2">
+					  <i *ngIf="! this.chefProjetExist.imageURL" class="mdi mdi-account-hard-hat " style="font-size: 24px;"></i>
+					  <img *ngIf=" this.chefProjetExist.imageURL" [src]=" this.chefProjetExist.imageURL" class="rounded-circle mr-1" alt="Avatar" width="28" height="28">
+					  {{  this.chefProjetExist.prenom }} {{  this.chefProjetExist.nom }}
+					</div>
+				  </ng-container>
+				  
+				  <!-- Define the "noArticle" template to be displayed when the article is not found -->
+				  <ng-template #noChefProjet>
+					<div class="card-body px-4 pt-2">
+						<i class="mdi mdi-account-hard-hat " style="font-size: 24px;"></i>
+					  <!-- Display a message indicating that the article does not exist -->
+					  Chef projet non trouvé encors.
+					</div>
+				  </ng-template>
 				
-				<button  routerLink="../listEtage" class="btn  btn-primary">Voir les etages</button>
+				
+				<button  [routerLink]="['../listEtage',t.id]" class="btn  btn-primary">Voir les etages</button>
 
             </div>
         </div>
-       
+    
+		
     </div>
+	
 </div>
 <br>
+
+
+

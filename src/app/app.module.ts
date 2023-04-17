@@ -12,12 +12,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SideBarComponent } from './pages/side-bar/side-bar.component';
 import { NavBarComponent } from './pages/nav-bar/nav-bar.component';
-import { ListEtageComponent } from './pages/list-etage/list-etage.component';
+import { ListEtageComponent } from './pages/etage/list-etage/list-etage.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ListChefProjetComponent } from './pages/gestionChefProjet/list-chefProjet/list-chefProjet.component';
 import { ListChefChantierComponent } from './pages/gestionChefChantier/list-chef-chantier/list-chef-chantier.component';
 import { ModalBoxChefProjetComponent } from './pages/gestionChefProjet/modal-box-chef-projet/modal-box-chef-projet.component';
 import { ModalBoxChefChantierComponent } from './pages/gestionChefChantier/modal-box-chef-chantier/modal-box-chef-chantier.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalBoxComponent } from './pages/chantier/modal-box/modal-box.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -30,9 +33,11 @@ import { ModalBoxChefChantierComponent } from './pages/gestionChefChantier/modal
     NavBarComponent,
     ListEtageComponent,
     ListChefChantierComponent,
+    ModalBoxComponent,
   ],
 
   imports: [
+    NgbModalModule,
     NgxPaginationModule,
     ReactiveFormsModule,
 
@@ -43,7 +48,9 @@ import { ModalBoxChefChantierComponent } from './pages/gestionChefChantier/modal
     BrowserAnimationsModule,
     HttpClientModule,
     MatDialogModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgMultiSelectDropDownModule.forRoot(),
+
 
     
 

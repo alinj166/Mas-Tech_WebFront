@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { chefProjet } from 'src/app/models/ChefProjet';
 import { Chantier } from 'src/app/models/chantier';
 import { ApiService } from 'src/app/services/api.service';
+import { ModalBoxComponent } from '../modal-box/modal-box.component';
 
 @Component({
   selector: 'app-list-chantier',
@@ -9,15 +11,11 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./list-chantier.component.css'],
 })
 export class ListProjetComponent implements OnInit {
-  constructor(private api: ApiService,private cdr: ChangeDetectorRef) { }
+  constructor(private api: ApiService,private modalService: NgbModal) { }
+  chefProjets:chefProjet[] = [];
   Chantiers: Chantier[] = [];
   listChefProjet: chefProjet[] = [];
-  displayStyle = "none";
-  openPopup() {
-    this.displayStyle = "block";
-  }
-
-
+  chefProjetExist!:chefProjet;
   ngOnInit(): void {
     //Get all Projet
     this.api.getAllChantier().subscribe((data) => {
@@ -28,6 +26,20 @@ export class ListProjetComponent implements OnInit {
       })
     });
     });
+
+  }
+
+  isChefProjetExist(id:any) {
+    this.chefProjetExist=this.listChefProjet.find(item => item.id === id)!;
+    return this.chefProjetExist
+  }
+
+ 
+
+  openModal(idChantier:any) {
+    const modalRef = this.modalService.open(ModalBoxComponent); // Open the modal 
+    modalRef.componentInstance.idChantier = idChantier; 
+
   }
 
   //Cloturer Projet
@@ -37,7 +49,6 @@ export class ListProjetComponent implements OnInit {
       next: (res) => {
         alert(' Chantier cloturer avec succés');
         this.Chantiers;
-        this.cdr.detectChanges();
 
       },
       error: (err) => {

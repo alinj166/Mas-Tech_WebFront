@@ -18,6 +18,9 @@
                 <input *ngIf="!editData" type="password" class="form-control" formControlName="password"
                     [(ngModel)]="cinPassword" [readonly]="true" />
             </div>
+            <div class="alert alert-danger" *ngIf="password&& password.invalid">
+                ce champ d'entrée n'est pas valide
+            </div>
             <div class="warning alert-warning">
                 pour la 1er fois ce champ remplit avec le CIN
             </div>
@@ -46,7 +49,7 @@
         </div>
         <div class="modal-footer">
             <input type="button" class="btn btn-default" mat-dialog-close data-dismiss="modal" value="Annuler" />
-            <button type="submit" class="btn btn-success">{{ actionBtn }}</button>
+            <button type="submit" class="btn btn-success" [disabled]="chefChantierForm.invalid">{{ actionBtn }}</button>
         </div>
     </form>
 </div>

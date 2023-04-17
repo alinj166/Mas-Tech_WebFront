@@ -1,0 +1,38 @@
+
+  <!--Content-->
+  <div class="modal-content">
+    <!--Header-->
+    <div class="modal-header text-center">
+      <h4 class="modal-title white-text w-100 font-weight-bold py-2">Affectés Chef Projet </h4>
+      <button type="button" class="close" >
+        <span aria-hidden="true" class="white-text">&times;</span>
+      </button>
+    </div>
+
+    <!--Body-->
+    <div class="modal-body">
+        <p>Voulez-vous vraiment Affectés ce Chef Projet  ?</p>
+
+      
+        <div class="row"> 
+            <div class="col-sm-4">Chef Projet</div>
+            <div class="col-sm-6">
+                    <div class="form-group">
+            <select [(ngModel)]="idChefProjet" class="form-select form-select-sm "   >
+          
+                    <option *ngFor="let t of chefProjets" [value]="t.id"> {{t.nom}} {{t.prenom}}</option>
+        
+            </select>
+        </div>
+        </div>
+        </div>  
+      </div>
+
+
+    <!--Footer-->
+    <div class="modal-footer justify-content-center">
+        <button type="submit" class="btn btn-primary" (click)="  affecterChefProjet()" >Affecter</button>
+    </div>
+  </div>
+  <!--/.Content-->
+

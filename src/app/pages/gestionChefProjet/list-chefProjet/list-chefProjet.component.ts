@@ -17,12 +17,10 @@ export class ListChefProjetComponent implements OnInit {
   chefProjets: chefProjet[] = [];
   chantiers: Chantier[] = [];
   pageSizeChefProjet= 5; // the number of items per page
-  pageChefProjet = 1;
-
-
+  pageChefProjet = 1; 
+  
   ngOnInit(): void {
     this.getAllChefProjet();
-
   }
 
   //Delete chefProjet
@@ -37,7 +35,7 @@ export class ListChefProjetComponent implements OnInit {
     });
   }
 
-  //Open dialog box and to Edit chefProjet
+  //Open dialog box to Edit chefProjet
   EditDialog(row: any) {
     {
       this.dialog
@@ -51,7 +49,7 @@ export class ListChefProjetComponent implements OnInit {
         });
     }
   }
-  //Open dialog box and to add chefProjet
+  //Open dialog box  to add chefProjet
   openDialog() {
     this.dialog
       .open(ModalBoxChefProjetComponent, {

@@ -16,7 +16,6 @@ export class ListChefChantierComponent implements OnInit {
 
   constructor(private api: ApiService, private dialog: MatDialog) { }
   chefChantiers:ChefChantier[] = [];
-  chantiers: Chantier[] = [];
   pageSizechefChantier= 5; // the number of items per page
   pageChefChantier = 1;  
   ngOnInit(): void {
@@ -37,7 +36,7 @@ export class ListChefChantierComponent implements OnInit {
   }
 
   
-  //Open dialog box and to Edit chefProjet
+  //Open dialog box to Edit chefProjet
   EditDialog(row: any) {
     {
       this.dialog
@@ -47,11 +46,12 @@ export class ListChefChantierComponent implements OnInit {
         })
         .afterClosed()
         .subscribe((val) => {
-          if (val == 'update') this.getAllChefChantier();
+          if (val == 'update')
+           this.getAllChefChantier();
         });
     }
   }
-  //Open dialog box and to add chefProjet
+  //Open dialog box to add chefProjet
   openDialog() {
     this.dialog
       .open(ModalBoxChefChantierComponent, {
@@ -59,22 +59,19 @@ export class ListChefChantierComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((val) => {
-        if (val == 'save') this.getAllChefChantier();
+        if (val == 'save') 
+        this.getAllChefChantier();
       });
   }
+
+   
   //get all ChefChantier
 getAllChefChantier() {
   this.api.getAllChefChantier().subscribe((data) => {
     this.chefChantiers = data;
-    this.chefChantiers.forEach((element) => {
-      //to get all projects  affected to the chef by id
-      this.api.getAllChantierByChef(element.id).subscribe((data) => {
-        data.forEach((e) => {
-          this.chantiers.push(e);
-        });
-      });
+    
     });
-  });
+  };
 }
 
-}
+
