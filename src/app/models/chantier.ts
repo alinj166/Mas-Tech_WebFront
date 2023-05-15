@@ -6,10 +6,8 @@ export class Chantier {
         public description?:String,
         public date_fin?:Date,
         public date_debut?:Date,
-
         public lieu?:String,
-        public chefProjetId?:String,
-        public chefChantierId?:String,
+        public UtilisateurId?:number,
         public type?:String,
         public percentAvancement?:String,
         public percentElaboration?:String,

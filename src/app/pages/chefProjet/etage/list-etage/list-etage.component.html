@@ -1,0 +1,94 @@
+
+<div >
+    <div class="col text-center mb-5">
+       <h1 class="display-4">List des Etages</h1>
+    </div>
+  </div>
+<div class="container mt-5 mb-3">
+
+    <div class="row">
+        <div *ngFor="let t of etageArray| paginate: { itemsPerPage: pageSize, currentPage: page } " class="col-md-4">
+
+          <div class="card p-3 mb-2 " >
+        
+
+              <div class=" card-actions d-flex justify-content-end">
+                <div class="dropdown show">
+                  <a href="#" data-toggle="dropdown" data-display="static">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" class="feather feather-more-horizontal align-middle">
+                      <circle cx="12" cy="12" r="1"></circle>
+                      <circle cx="19" cy="12" r="1"></circle>
+                      <circle cx="5" cy="12" r="1"></circle>
+                    </svg>
+                  </a>
+      
+                  <div class="dropdown-menu dropdown-menu-right">
+                  
+                    <button *ngIf="!t.value" class="dropdown-item" (click)="openModalAddPlan(content)"  ><i class="mdi mdi-upload"  ></i>Insérer l'image du plan</button>    
+                    <button   *ngIf="t.value" class=" dropdown-item "  style="color:rgb(255, 36, 36)" (click)="removeImagePlan( t.key.id)"><i class=" mdi mdi-close-circle-outline" ></i>supprimer l'image du plan</button>
+    
+                  </div>
+                </div>
+                <ng-template #content let-modal>
+                 
+                  <!--Header-->
+                  <div class="modal-header text-center">
+                    <h4 class="modal-title white-text w-100 font-weight-bold py-2">Insérer l'image du plan </h4>
+                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+                      <span  class="white-text">&times;</span>
+                    </button>
+                  </div>
+            
+                  <!--Body-->
+                  <div class="modal-body">
+                      <label data-error="wrong" data-success="right" for="form3">Image du plan</label>
+                   <input type="file" accept="image/*" id="form3" class="form-control" (change)="selectImage($event)">
+                    </div>
+            
+            
+                  <!--Footer-->
+                  <div class="modal-footer justify-content-center">
+                    <button type="submit" class="btn btn-primary " (click)="onSubmit(t.key?.id)">Ajouter </button>
+                  </div>
+    
+            </ng-template>
+
+              </div> 
+                <img *ngIf="t.value" [src]="t.value"  width="382" height="270" class="card-img-top" alt="Image du plan"   (click)="openModalShowImage(t.value)" >
+
+
+                <img *ngIf="!t.value" src="../../../assets/plan1.png" width="382" height="270" class="card-img-top" alt="Image du plan" >
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                        <div class="icon"> <i class="bx bxl-mailchimp"></i> </div>
+                        <div class="ms-2 c-details">
+
+                            <h3 class="card-title mb-0"> ETAGE {{t.key?.numero}}</h3> 
+					
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <div class="mt-5">
+					<p class="card-text">{{t.key?.description}}
+                    </p>
+	     
+					
+                </div>
+
+		
+            </div>
+            
+        </div>
+       
+    </div>
+  
+</div>
+<div class="pagination">
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
+
+

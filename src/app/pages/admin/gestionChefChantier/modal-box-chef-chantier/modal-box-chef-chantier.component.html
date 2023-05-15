@@ -1,0 +1,55 @@
+<div>
+    <form [formGroup]="chefChantierForm" (submit)="envoyer()">
+        <div class="modal-header">
+            <h4 class="modal-title">{{formTitre}}</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Cin</label>
+                <input type="text" class="form-control" formControlName="cin" (input)="updatePassword()" />
+            </div>
+            <div class="alert alert-danger" *ngIf="cin && cin.invalid  && (cin.dirty || cin.touched)">
+                ce champ d'entrée n'est pas valide
+            </div>
+            <div class="form-group">
+                <label>password</label>
+
+                <input *ngIf="editData" type="password" class="form-control" formControlName="password" />
+                <input *ngIf="!editData" type="password" class="form-control" formControlName="password"
+                   [value]="cinPassword" [readonly]="true" />
+            </div>
+            <div class="alert alert-danger" *ngIf="password && password.invalid  && (password.dirty || password.touched)">
+                ce champ d'entrée n'est pas valide
+            </div>
+            <div class="warning alert-warning">
+                pour la 1er fois ce champ remplit avec le CIN
+            </div>
+
+            <div class="form-group">
+                <label>Nom</label>
+                <input type="text" class="form-control" formControlName="nom" />
+            </div>
+            <div class="alert alert-danger" *ngIf="nom && nom.invalid  && (nom.dirty || nom.touched)">
+                ce champ d'entrée n'est pas valide
+            </div>
+            <div class="form-group">
+                <label>Prénom</label>
+                <input type="text" class="form-control" formControlName="prenom" />
+            </div>
+            <div class="alert alert-danger" *ngIf="prenom && prenom.invalid  && (prenom.dirty || prenom.touched)">
+                ce champ d'entrée n'est pas valide
+            </div>
+            <div class="form-group">
+                <label>Numéro de téléphone</label>
+                <input type="text" class="form-control" formControlName="numTel" />
+            </div>
+            <div class="alert alert-danger" *ngIf="numTel && numTel.invalid  && (numTel.dirty || numTel.touched)">
+                ce champ d'entrée n'est pas valide
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default" mat-dialog-close data-dismiss="modal" value="Annuler" />
+            <button type="submit" class="btn btn-success" [disabled]="chefChantierForm.invalid">{{ actionBtn }}</button>
+        </div>
+    </form>
+</div>

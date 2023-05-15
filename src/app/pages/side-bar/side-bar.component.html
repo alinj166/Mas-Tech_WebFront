@@ -1,15 +1,21 @@
-<nav class="sidebar">
-  <div class="sidebar-header">
-    <h3>Admin Dashboard</h3>
+<div class="sidenav " [ngClass]="collapsed ? 'sidenav-collapsed':''">
+  <div class="logo-container">
+    <button class="logo" (click)="toggleCollapse()">A</button>
+    <div class="logo-text" *ngIf="collapsed"> Angular</div>
+    <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
+      <i class="fal fa-times close-icon"></i>
+    </button>
   </div>
-  <ul class="list-unstyled components">
-    <li *ngFor="let menu of menus" [ngClass]="{'active': menu.active}">
-      <a [routerLink]="menu.route">
-        <i class="fas fa-fw {{menu.icon}}"></i>
-        {{menu.name}}
+  <ul class="sidenav-nav">
+    <li class="sidenav-nav-item" *ngFor="let menu of menus" >
+      <a class="sidenav-nav-link" [routerLink]="menu.route" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+        <i   class="sidenav-link-icon "  [ngClass]="menu.icon"></i>
+      <span class="sidenav-link-text" *ngIf="collapsed" > 
+         {{menu.name}}
+      </span>
       </a>
     </li>
   </ul>
-</nav>
+</div>
 
 

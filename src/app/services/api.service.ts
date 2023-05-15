@@ -3,128 +3,155 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Chantier } from '../models/chantier';
-import { chefProjet } from '../models/ChefProjet';
 import { Etage } from '../models/etage';
 import { Plan } from '../models/plan';
-import { ChefChantier } from '../models/chef-chantier';
+import { TokenStorageService } from './token-storage.service';
+import { Utilisateur } from '../models/utilisateur';
+
 
 const URL=environment.apiUrl;
 
-const headers = new HttpHeaders({
-  'Content-Type': 'application/json',
-});
-
-
-
-
-
- const requestOptions = { headers: headers };
  @Injectable({
    providedIn: 'root'
  })
+ 
 export class ApiService {
+  private headers: HttpHeaders;
+  private requestOptions: { headers: HttpHeaders };
 
-  constructor(   private http:HttpClient ) { }
+  constructor(private http: HttpClient, private tokenService: TokenStorageService) {
+    const token = this.tokenService.getToken(); // Replace with your actual token
 
+    this.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    });
 
+    this.requestOptions = { headers: this.headers };
+  }  
 
-// Get All getAllChantier
+  // Get All getAllChantier
  public getAllChantier():Observable <Chantier[]> {
-  return this.http.get<Chantier[]>(URL+'/chantiers')
+  return this.http.get<Chantier[]>(URL+'/chantiers',this.requestOptions)
   
 }
 
+// Get  getChantier
+public getChantier(id:any):Observable <Chantier> {
+  return this.http.get<Chantier>(URL+'/chantiers/'+id,this.requestOptions)
+  
+}
 
 // Get  chantiers by Id
 public getChantierById(id:string):Observable <Chantier> {
-  return this.http.get<Chantier>(URL+'/chantiers/'+id)
+  return this.http.get<Chantier>(URL+'/chantiers/'+id,this.requestOptions)
   
 }
 // Delete chantier 
 public deleteChantier(id:number) {
-  return this.http.delete<Chantier>(URL+'/chantiers/'+id);
+  return this.http.delete<Chantier>(URL+'/chantiers/'+id,this.requestOptions);
 
 }
 
 // put Chantier
 public putChantier(service:Chantier,id:string):Observable <Chantier> {
-  return this.http.put<Chantier>(URL+'/chantiers/'+id,service,requestOptions);
+  return this.http.put<Chantier>(URL+'/chantiers/'+id,service,this.requestOptions);
 }
 // cloturer Chantier
 public cloturerChantier(id:string):Observable <Chantier> {
-  return this.http.put<Chantier>(URL+'/chantiers/'+id+"/cloturer",requestOptions);
+  return this.http.put<Chantier>(URL+'/chantiers/'+id+"/cloturer",'',this.requestOptions);
 }
 
 // Get ALL chefProjet
-public getAllChefProjet():Observable <chefProjet[]> {
-  return this.http.get<chefProjet[]>(URL+'/chefProjets')
+public getAllChefProjet():Observable <Utilisateur[]> {
+  return this.http.get<Utilisateur[]>(URL+'/chefProjets',this.requestOptions)
 }
 // Get ALL chefChantier
-public getAllChefChantier():Observable <ChefChantier[]> {
-  return this.http.get<ChefChantier[]>(URL+'/chefChantiers')
+public getAllChefChantier():Observable <Utilisateur[]> {
+  return this.http.get<Utilisateur[]>(URL+'/chefChantiers',this.requestOptions)
 }
 
 // Get chefProjet By id 
-public getChefProjetById(id:any):Observable <chefProjet> {
-  return this.http.get<chefProjet>(URL+'/chefProjets/'+id)
+public getChefProjetById(id:any):Observable <Utilisateur> {
+  return this.http.get<Utilisateur>(URL+'/chefProjets/'+id,this.requestOptions)
 }
 // Add ChefProjet
-public addChefProjet(service:chefProjet):Observable <chefProjet> {
-  return this.http.post<chefProjet>(URL+'/chefProjets',service,requestOptions) 
+public addChefProjet(service:Utilisateur):Observable <Utilisateur> {
+  return this.http.post<Utilisateur>(URL+'/chefProjets/register',service,this.requestOptions) 
    
 }
 // Add ChefProjet
-public addChefChantier(service:ChefChantier):Observable <ChefChantier> {
-  return this.http.post<ChefChantier>(URL+'/chefChantiers',service,requestOptions) 
+public addChefChantier(service:any):Observable <Utilisateur> {
+  return this.http.post<Utilisateur>(URL+'/chefChantiers/register',service,this.requestOptions) 
    
 }
 
+// put Account
+public  putAccount(service:any,id:any):Observable <Utilisateur> {
+  return this.http.put<Utilisateur>(URL+'/auth/'+id,service,this.requestOptions);
+}
 // put ChefProjet
-public  putChefProjet(service:chefProjet,id:number):Observable <chefProjet> {
-  return this.http.put<chefProjet>(URL+'/chefProjets/'+id,service,requestOptions);
+public  putChefProjet(service:any,id:any):Observable <Utilisateur> {
+  return this.http.put<Utilisateur>(URL+'/chefProjets/'+id,service,this.requestOptions);
 }
 // put ChefChantier
-public putChefChantier(service:ChefChantier,id:number):Observable <ChefChantier> {
-  return this.http.put<ChefChantier>(URL+'/chefChantiers/'+id,service,requestOptions);
+public putChefChantier(service:any,id:any):Observable <Utilisateur> {
+  return this.http.put<Utilisateur>(URL+'/chefChantiers/'+id,service,this.requestOptions);
 }
 
 // Delete chefProjet
- public deleteChefProjet(id:number):Observable <chefProjet> {
-  return this.http.delete<chefProjet>(URL+'/chefProjets/'+id );
+ public deleteChefProjet(id:number){
+  return this.http.delete<Utilisateur>(URL+'/chefProjets/'+id,this.requestOptions );
 
 }
 // Delete chefChantier
-public deleteChefChantier(id:number):Observable <ChefChantier> {
-  return this.http.delete<ChefChantier>(URL+'/chefChantiers/'+id );
+public deleteChefChantier(id: number | undefined) {
+  return this.http.delete<Utilisateur>(URL+'/chefChantiers/'+id,this.requestOptions );
 
 }
 // Get ALL Chantiers by chef
 public getAllChantierByChef(id:any):Observable <Chantier[]> {
-  return this.http.get<Chantier[]>(URL+'/chefProjets/'+id+'/chantiers');
+  return this.http.get<Chantier[]>(URL+'/chefProjets/'+id+'/chantiers',this.requestOptions);
 }
 // Get ALL Chantiers by chef
 public getAllEtageByChantier(id:any):Observable <Etage[]> {
-  return this.http.get<Etage[]>(URL+'/chantiers/'+id+'/etages');
+  return this.http.get<Etage[]>(URL+'/chantiers/'+id+'/etages',this.requestOptions);
 }
+
+// Get all plan 
+public getAllPlan():Observable <Plan[]> {
+  return this.http.get<Plan[]>(URL+'/plans',this.requestOptions);
+
+}
+
 // Get plan by etage
 public getPlanByEtage(id:any):Observable <Plan> {
-  return this.http.get<Plan>(URL+'/etages/'+id+'/plan');
+  return this.http.get<Plan>(URL+'/etages/'+id+'/plan',this.requestOptions);
 
 }
 // Post plan 
 public postPlan(service:any):Observable <any> {
-  return this.http.post<any>(URL+'/plans',service);
+  return this.http.post<any>(URL+'/plans',service,this.requestOptions);
 }
+// Post plan 
+public removePlan(id:any){
+  return this.http.delete(URL+'/plans/'+id,this.requestOptions);
+}
+
 //affecte plan 
 public affecterPlan(idEtage:any,idPlan:any):Observable <Plan> {
-  return this.http.put<Plan>(URL+'/etages/'+idEtage+'/plans/'+idPlan,'');
+  return this.http.put<Plan>(URL+'/etages/'+idEtage+'/plans/'+idPlan,'',this.requestOptions);
 }
 
 //affecte ChefProjet 
-public affecterChefProjet(idChantier:any,idChefProjet:any):Observable <chefProjet> {
-  return this.http.put<chefProjet>(URL+'/chefProjets/'+idChefProjet+'/chantiers/'+idChantier,'');
+public affecterChefProjet(idChantier:any,idChefProjet:any):Observable <Utilisateur> {
+  return this.http.put<Utilisateur>(URL+'/chefProjets/'+idChefProjet+'/chantiers/'+idChantier,'',this.requestOptions);
 }
 
+//login  
+public login(service:any):Observable <Utilisateur> {
+  return this.http.post<Utilisateur>(URL+'/auth/login',service,this.requestOptions);
+}
 
 }
 

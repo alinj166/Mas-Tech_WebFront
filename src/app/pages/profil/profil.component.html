@@ -1,0 +1,123 @@
+    <body >
+    <div class="container">
+        <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="account-settings">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img [src]="user.imageURL" alt="Image de profil">
+                        </div>
+                        <h3 >{{user.prenom}} {{user.nom}}</h3>
+                        <h3 >{{user.role}}</h3>
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">choisir l'image de votre profil</label>
+                        <input id="formFile" class="form-control" 
+                            type="file"
+                            accept="image/*"
+                            (change)="selectImage($event)"
+                        />
+                    </div>
+            
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+            <form [formGroup]="profilForm" (submit)="envoyerData()">
+            <div class="card h-100">
+            <div class="card-body">
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-col-12">
+                        <h4 class="mb-2 text-primary">Détails personnels
+                        </h4>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label >Nom</label>
+                            <input type="text" class="form-control" placeholder="Entrez le nom" formControlName="nom" >
+                        </div>
+                        <div class="alert alert-danger"  *ngIf="nom && nom.invalid  && (nom.dirty || nom.touched)">
+                            ce champ d'entrée n'est pas valide
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label >Prénom</label>
+                            <input type="text" class="form-control"  placeholder="Entrez le prenom" formControlName="prenom" >
+                        </div>
+                        <div class="alert alert-danger"  *ngIf="prenom && prenom.invalid  && (prenom.dirty || prenom.touched)">
+                            ce champ d'entrée n'est pas valide
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label >Téléphone</label>
+                            <input type="text" class="form-control" placeholder="Entrez le numéro de téléphone" formControlName="numTel" >
+                        </div>
+                        <div class="alert alert-danger"  *ngIf="numTel && numTel.invalid  && (numTel.dirty || numTel.touched)">
+                            ce champ d'entrée n'est pas valide
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label >CIN</label>
+                            <input type="text" class="form-control"  placeholder="Entrez la carte d'identité nationale CIN " formControlName="cin" >
+                        </div>
+                        <div class="alert alert-danger"  *ngIf="cin && cin.invalid  && (cin.dirty || cin.touched)">
+                            ce champ d'entrée n'est pas valide
+                        </div>
+                    </div>
+               
+                    
+                </div>
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <h4 class="mt-3 mb-2 text-primary">mot de passe</h4>
+                    </div>
+                
+                      <div class="  form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="customSwitch" formControlName="enablePasswordChange" (change)="togglePasswordInput()">
+                        <label class="form-check-label" for="customSwitch">Modifier mot de passe</label>
+
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label >Mot de passe</label>
+                            <input type="password" class="form-control" placeholder="Entrez le mot de passe"  [readonly]="!profilForm.get('enablePasswordChange')?.value" formControlName="password" >
+                        </div>
+                        <div class="alert alert-danger"  *ngIf="password && password.invalid  && (password.dirty || password.touched)">
+                            ce champ d'entrée n'est pas valide
+                        </div>
+                    </div>
+                   
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>ressaisir le mot de passe</label>
+                            <input type="password" class="form-control"  placeholder="Ressaisir le mot de passe"  formControlName="confirmPassword"  [readonly]="!profilForm.get('enablePasswordChange')?.value">
+                        </div>
+                        <div class="alert alert-danger" *ngIf="confirmPassword  && (confirmPassword.dirty || confirmPassword.touched)&& profilForm.hasError('passwordMismatch')">
+                            Passwords do not match.
+                          </div>
+                    </div>
+                    
+                </div>
+              
+                <div class="row gutters">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="text-right">
+                            <button type="submit"  class="btn btn-primary"[disabled]="profilForm.invalid">Modifier   </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         </form>
+        </div>
+    
+        </div>
+        </div>
+    </body>

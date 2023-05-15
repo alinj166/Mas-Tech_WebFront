@@ -1,0 +1,28 @@
+<div class="align-center">
+  <h2>User Login</h2>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+    <input
+      placeholder="Email Id"
+      type="text"
+      name="email"
+      formControlName="cin"
+    />
+    <div class="alert alert-danger" *ngIf="cin && cin.invalid  && (cin.dirty || cin.touched)">
+      ce champ d'entrée n'est pas valide
+  </div>
+    <input
+      placeholder="Password"
+      type="password"
+      name="password"
+      formControlName="password"
+    />
+    <div class="alert alert-danger" *ngIf="password && password.invalid && (password.dirty || password.touched)">
+      ce champ d'entrée n'est pas valide
+  </div>
+    <div class="btn-div">
+      <button type="submit" [disabled]="!userForm.valid" class="login-btn">
+        Login
+      </button>
+    </div>
+  </form>
+</div>
