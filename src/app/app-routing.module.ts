@@ -4,19 +4,21 @@ import { ProfilComponent } from './pages/profil/profil.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ListChefProjetComponent } from './pages/admin/gestionChefProjet/list-chefProjet/list-chefProjet.component';
 import { ListChefChantierComponent } from './pages/admin/gestionChefChantier/list-chef-chantier/list-chef-chantier.component';
-import { ListProjetComponent } from './pages/chefProjet/chantier/list-chantier/list-chantier.component';
-import { ListEtageComponent } from './pages/chefProjet/etage/list-etage/list-etage.component';
+import { ListChantierComponent } from './pages/chantier/list-chantier/list-chantier.component';
+import { ListEtageComponent } from './pages/etage/list-etage/list-etage.component';
+import { AdminAuthGuard } from './guard/admin-auth.guard';
+import { ErrorComponent } from './pages/error/error.component';
+import { CombinedAuthGuardGuard } from './guard/combined-auth-guard.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'listChefProjet', pathMatch: 'full' },
-  { path: 'listChefProjet', component: ListChefProjetComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'listChefProjet', component: ListChefProjetComponent,canActivate: [AdminAuthGuard] },
+  { path: 'listChefChantier', component: ListChefChantierComponent ,canActivate: [AdminAuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'listChefChantier', component: ListChefChantierComponent },
-  { path: 'listChantier', component: ListProjetComponent },
-  { path: 'listEtage/:id', component: ListEtageComponent },
-  { path: 'profil', component: ProfilComponent },
-
-  { path: '**', component: ListChefProjetComponent },
+  { path: 'listChantier', component: ListChantierComponent,canActivate: [CombinedAuthGuardGuard]  },
+  { path: 'listEtage/:id', component: ListEtageComponent ,canActivate: [CombinedAuthGuardGuard] },
+  { path: 'profil', component: ProfilComponent,canActivate: [CombinedAuthGuardGuard]  },
+  { path: '**', component: ErrorComponent },
 ]
 
 @NgModule({

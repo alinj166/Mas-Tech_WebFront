@@ -15,23 +15,22 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ProfilComponent } from './pages/profil/profil.component';
 import { BodyComponent } from './pages/body/body.component';
 import { LoginComponent } from './pages/login/login.component';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from './services/api.service';
 import { ListChefProjetComponent } from './pages/admin/gestionChefProjet/list-chefProjet/list-chefProjet.component';
-import { ListProjetComponent } from './pages/chefProjet/chantier/list-chantier/list-chantier.component';
 import { ModalBoxChefProjetComponent } from './pages/admin/gestionChefProjet/modal-box-chef-projet/modal-box-chef-projet.component';
 import { ModalBoxChefChantierComponent } from './pages/admin/gestionChefChantier/modal-box-chef-chantier/modal-box-chef-chantier.component';
-import { ListEtageComponent } from './pages/chefProjet/etage/list-etage/list-etage.component';
+import { ListEtageComponent } from './pages/etage/list-etage/list-etage.component';
 import { ListChefChantierComponent } from './pages/admin/gestionChefChantier/list-chef-chantier/list-chef-chantier.component';
-import { ModalBoxComponent } from './pages/chefProjet/chantier/modal-box/modal-box.component';
+import { ModalBoxComponent } from './pages/chantier/modal-box/modal-box.component';
+import { ErrorComponent } from './pages/error/error.component';
+import { ListChantierComponent } from './pages/chantier/list-chantier/list-chantier.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ListChefProjetComponent,
-    ListProjetComponent,
     ModalBoxChefProjetComponent,
     ModalBoxChefChantierComponent,
     SideBarComponent,
@@ -39,10 +38,11 @@ import { ModalBoxComponent } from './pages/chefProjet/chantier/modal-box/modal-b
     ListEtageComponent,
     ListChefChantierComponent,
     ModalBoxComponent,
-
     ProfilComponent,
     BodyComponent,
     LoginComponent,
+    ErrorComponent,
+    ListChantierComponent,
   ],
  
   imports: [

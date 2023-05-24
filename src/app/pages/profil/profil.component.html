@@ -7,7 +7,9 @@
                 <div class="account-settings">
                     <div class="user-profile">
                         <div class="user-avatar">
-                            <img [src]="user.imageURL" alt="Image de profil">
+                            <img *ngIf="user.imageURL" [src]="user.imageURL" alt="Image de profil">
+                            <img *ngIf="!user.imageURL" src="../../../assets/plan1.png" alt="Image de profil">
+
                         </div>
                         <h3 >{{user.prenom}} {{user.nom}}</h3>
                         <h3 >{{user.role}}</h3>

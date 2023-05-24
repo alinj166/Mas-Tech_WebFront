@@ -6,6 +6,7 @@ import { ModalBoxComponent } from '../modal-box/modal-box.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-list-etage',
@@ -14,13 +15,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListEtageComponent implements OnInit {
 
-  constructor(private toastr:ToastrService,private api: ApiService,private modalService: NgbModal,private route: ActivatedRoute) { }
+  constructor(private token:TokenStorageService,private toastr:ToastrService,private api: ApiService,private modalService: NgbModal,private route: ActivatedRoute) { }
   etages: Etage[] = [];
   plans: Plan[] = [];
   planExist!:Plan;
   image:any=null;
   etageMap=new Map< Etage,string| null>();
   etageArray: {key: Etage,value: string| null}[] = [];
+  isAdmin=this.token.isAdmin() 
 
   pageSize= 6; // the number of items per page
   page = 1; 
@@ -29,12 +31,9 @@ ngOnInit(): void {
 
   const idEtage = this.route.snapshot.paramMap.get('id');
   // Get étages by id chantier
-  let i=-1
   this.api.getAllEtageByChantier(idEtage).subscribe((etages) => {
     this.etages = etages;
     this.etages.forEach((etage) => {
-      i++
-
       // Get plans by id étage
       this.api.getPlanByEtage(etage.id).subscribe(
         (res) => {
@@ -84,12 +83,11 @@ onSubmit(idEtage:any|null)
       
       this.toastr.success( 'Image charger avec succès','Réussir');
       this.modalService.dismissAll();
-      const index = this.etageArray.findIndex(e => e.key.id === idEtage);
-      if (index) {
+      const index = this.etageArray.findIndex(e => e.key.id == idEtage);
+      if (index!=null) {
         this.etageArray[index].value=response.data.imageUrl
 
       }
-      console.log(response.data.imageUrl)
 
     },
     () => {
@@ -107,7 +105,7 @@ removeImagePlan(idEtage:any)
       
       this.toastr.success( 'Image supprimer avec succès','Réussir');
       const index = this.etageArray.findIndex(e => e.key.id === idEtage);
-      if (index) {
+      if (index!=null) {
         this.etageArray[index].value=null
 
       }

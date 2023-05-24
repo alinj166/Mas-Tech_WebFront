@@ -20,15 +20,24 @@ export class ModalBoxChefProjetComponent implements OnInit {
   chefProjet!:Utilisateur
 
   chefProjetForm = this.formBuilder.group({
+    id:[],
     prenom: ['', Validators.required],
     nom: ['', Validators.required],
     numTel: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     cin: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern("^[0-9]*$")]],
     password:['',[Validators.minLength(8), Validators.maxLength(8)]],
-    role:['']
+    role:[''],
+    resetPassword:[false]
+
   });
 
   updateChefProjet() {
+    if (this.chefProjetForm.get('resetPassword')!.value){
+      this.chefProjetForm.controls['password'].setValue(this.chefProjetForm.get('cin')!.value)
+    }
+    else {
+      this.chefProjetForm.removeControl('password');
+    }
     this.api.putChefProjet(this.chefProjetForm.value, this.editData.id)
       .subscribe({
         next: () => {
@@ -53,15 +62,14 @@ export class ModalBoxChefProjetComponent implements OnInit {
   }
   envoyer() {
     this.chefProjet=this.chefProjetForm.value
-console.log(this.chefProjet)
     if (!this.editData) {
 
       this.api.addChefProjet(this.chefProjetForm.value)
         .subscribe({
-          next: () => {
+          next: (res:any) => {
             let dataSend = {
               button: 'save',
-              Chefprojet: this.chefProjet
+              Chefprojet: res.data
             }
 
             this.toastr.success( 'Chef projet a ajouter avec succés','Réussir');
@@ -110,11 +118,11 @@ console.log(this.chefProjet)
   ngOnInit(): void {
     this.chefProjetForm.controls['role'].setValue('chefProjet')
     if (this.editData) {
+      this.chefProjetForm.controls['id'].setValue(this.editData.id)
       this.chefProjetForm.controls['cin'].setValue(this.editData.cin)
       this.chefProjetForm.controls['nom'].setValue(this.editData.nom)
       this.chefProjetForm.controls['prenom'].setValue(this.editData.prenom)
       this.chefProjetForm.controls['numTel'].setValue(this.editData.numTel)
-      this.chefProjetForm.controls['password'].setValue(this.editData.password)
 
       this.actionBtn = "Modifier"
       this.formTitre="Modifier ce chef de projet"

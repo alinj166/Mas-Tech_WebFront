@@ -22,7 +22,6 @@ export class ListChefChantierComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllChefChantier();
-
   }
 
   //Delete chefChantier
@@ -31,7 +30,6 @@ export class ListChefChantierComponent implements OnInit {
       () => {
         this.toastr.success('Chef Chantier supprimé avec succès', 'Réussir');
         this.modalService.dismissAll();
-
         const index = this.chefChantiers.findIndex(item => item.id === id);
         if (index !== -1) {
           this.chefChantiers.splice(index, 1);
@@ -39,7 +37,7 @@ export class ListChefChantierComponent implements OnInit {
 
       },
       error => {
-        console.log(error); // Log the error response for debugging purposes
+        this.modalService.dismissAll();
         this.toastr.error('Erreur lors de la suppression du chef Chantier', 'Échoué');
       }
     );
@@ -74,12 +72,10 @@ export class ListChefChantierComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((val) => {
-
         this.chefChantiers.push(val.chefChantier)
       });
   }
     //Open dialog box  to delete chefProjet
-
     openModalDeleteChef(content: any) {
       this.modalService.open(content, { ariaLabelledBy: 'modal-title' });
     }

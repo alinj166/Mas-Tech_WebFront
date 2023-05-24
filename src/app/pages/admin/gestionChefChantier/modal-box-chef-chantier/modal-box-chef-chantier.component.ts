@@ -25,10 +25,19 @@ export class ModalBoxChefChantierComponent implements OnInit {
     numTel: ['', [Validators.required, Validators.pattern("^[0-9]*$")]],
     cin: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8), Validators.pattern("^[0-9]*$")]],
     password:['',[Validators.minLength(8), Validators.maxLength(8)]],
-    role:['']
+    role:[''],
+    resetPassword:[false]
   });
 
+
+  
   updateChefChantier() {
+    if (this.chefChantierForm.get('resetPassword')!.value){
+      this.chefChantierForm.controls['password'].setValue(this.chefChantierForm.get('cin')!.value)
+    }
+    else {
+      this.chefChantierForm.removeControl('password');
+    }
     this.api.putChefChantier(this.chefChantierForm.value, this.editData.id)
       .subscribe({
         next: () => {
@@ -38,6 +47,7 @@ export class ModalBoxChefChantierComponent implements OnInit {
           };
           this.toastr.success('Chef Chantier a modifier avec succés','Réussir');
           this.chefChantierForm.reset();
+          console.log(this.ChefChantier)
           this.dialogRef.close(dataSend);
 
         },
@@ -54,19 +64,17 @@ export class ModalBoxChefChantierComponent implements OnInit {
     if (!this.editData) {
       this.api.addChefChantier(this.chefChantierForm.value)
         .subscribe({
-          next: () => {
+          next: (res:any) => {
             let dataSend = {
               button: 'save',
-              chefChantier: this.ChefChantier
-            }
-
+              chefChantier:res.data
+            }   
             this.toastr.success( 'Chef Chantier a ajouter avec succés','Réussir');
             this.dialogRef.close(dataSend);
           },
           error: () => {
             this.toastr.error("Échec de l'ajout du chef chantier",'Echoué');
             this.dialogRef.close();
-
           }
         }
         );
@@ -96,7 +104,8 @@ export class ModalBoxChefChantierComponent implements OnInit {
     return this.chefChantierForm.get('numTel')
   }
 
-  get password() {
+  get password()
+  {
     return this.chefChantierForm.get('password')
   }
 
@@ -109,8 +118,8 @@ export class ModalBoxChefChantierComponent implements OnInit {
       this.chefChantierForm.controls['nom'].setValue(this.editData.nom)
       this.chefChantierForm.controls['prenom'].setValue(this.editData.prenom)
       this.chefChantierForm.controls['numTel'].setValue(this.editData.numTel)
-      this.chefChantierForm.controls['password'].setValue(this.editData.password)
-
+    
+      
       this.actionBtn = "Modifier"
       this.formTitre="Modifier ce chef de chantier"
 

@@ -22,6 +22,7 @@ export class ModalBoxComponent implements OnInit {
   dropdownList:any = [];
 
   constructor(private toastr:ToastrService,private api: ApiService,private activeModal:NgbActiveModal) { }
+  
  //get all Chefprojet
  getAllChefProjet() {
   this.api.getAllChefProjet().subscribe((data) => {
@@ -37,7 +38,7 @@ export class ModalBoxComponent implements OnInit {
 
     this.getAllChefProjet()
   }
-
+//Affecter chefProjet au chantier
   affecterChefProjet() {
    let  oldChantier!: Chantier;
     let newChantier!: Chantier;
@@ -56,16 +57,10 @@ export class ModalBoxComponent implements OnInit {
                 }; 
                 this.activeModal.close(dataSend);
                             })
-                        
-
-          
-
         },
       
         error: () => {
           this.toastr.error( "Error lorsque l'affectation du chef Projet",'Echoué');
-
-
         }
       })
   }

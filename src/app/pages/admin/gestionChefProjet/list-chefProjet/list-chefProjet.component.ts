@@ -83,7 +83,7 @@ export class ListChefProjetComponent implements OnInit {
       this.chefProjets = data;
       this.chefProjets.forEach((element) => {
         //to get all projects  affected to the chef by id
-        this.api.getAllChantierByChef(element.id).subscribe((data) => {
+        this.api.getAllChantierByChefProjet(element.id).subscribe((data) => {
           data.forEach((e) => {
             this.chantiers.push(e);
           });

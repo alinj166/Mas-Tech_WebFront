@@ -10,10 +10,8 @@
         <div *ngFor="let t of etageArray| paginate: { itemsPerPage: pageSize, currentPage: page } " class="col-md-4">
 
           <div class="card p-3 mb-2 " >
-        
-
               <div class=" card-actions d-flex justify-content-end">
-                <div class="dropdown show">
+                <div  *ngIf="!isAdmin" class="dropdown show">
                   <a href="#" data-toggle="dropdown" data-display="static">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                       fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -23,16 +21,13 @@
                       <circle cx="5" cy="12" r="1"></circle>
                     </svg>
                   </a>
-      
-                  <div class="dropdown-menu dropdown-menu-right">
-                  
-                    <button *ngIf="!t.value" class="dropdown-item" (click)="openModalAddPlan(content)"  ><i class="mdi mdi-upload"  ></i>Insérer l'image du plan</button>    
+                  <div  *ngIf="!isAdmin" class="dropdown-menu dropdown-menu-right">
+                    <button  *ngIf="!t.value " class="dropdown-item" (click)="openModalAddPlan(content)"  ><i class="mdi mdi-upload"  ></i>Insérer l'image du plan</button>    
                     <button   *ngIf="t.value" class=" dropdown-item "  style="color:rgb(255, 36, 36)" (click)="removeImagePlan( t.key.id)"><i class=" mdi mdi-close-circle-outline" ></i>supprimer l'image du plan</button>
-    
                   </div>
                 </div>
-                <ng-template #content let-modal>
-                 
+                <ng-template    #content let-modal>
+                 <div *ngIf="!isAdmin">
                   <!--Header-->
                   <div class="modal-header text-center">
                     <h4 class="modal-title white-text w-100 font-weight-bold py-2">Insérer l'image du plan </h4>
@@ -52,7 +47,7 @@
                   <div class="modal-footer justify-content-center">
                     <button type="submit" class="btn btn-primary " (click)="onSubmit(t.key?.id)">Ajouter </button>
                   </div>
-    
+                </div>
             </ng-template>
 
               </div> 
@@ -87,7 +82,10 @@
     </div>
   
 </div>
-<div class="pagination">
+<div *ngIf="etageArray.length === 0" class="empty-list-message">
+  <p>Aucun etage disponible</p>
+</div>
+<div *ngIf="etageArray.length !== 0" class="pagination">
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
 

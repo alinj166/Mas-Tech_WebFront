@@ -33,7 +33,16 @@ export class TokenStorageService {
     if (user) {
       return JSON.parse(user);
     }
-
-    return null;
+  }
+     isAdmin(): boolean{
+     let  user = window.sessionStorage.getItem(USER_KEY);
+     if (user) {
+       let userJson=JSON.parse(user);
+       if (userJson?.role=='Admin') {
+        return true
+       }
+       return false
+    }    
+    return false  
   }
 }

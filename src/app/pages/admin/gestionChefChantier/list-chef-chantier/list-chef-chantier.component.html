@@ -70,7 +70,10 @@
         </table>
 
     </div>
-    <div class="pagination">
+    <div *ngIf="chefChantiers.length === 0" class="empty-list-message">
+        <p>Aucun Chef de chantier disponible</p>
+      </div>
+    <div  *ngIf="chefChantiers.length !== 0"class="pagination">
         <pagination-controls (pageChange)="pageChefChantier = $event"></pagination-controls>
       </div>
 </div>

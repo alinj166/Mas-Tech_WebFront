@@ -45,10 +45,10 @@
 	
 							<div class="dropdown-menu dropdown-menu-right">
 							
-								<button class="dropdown-item"   (click)="openModal(t.key.id)" ><i class="mdi mdi-account-hard-hat " ></i>Affecter</button>
-								<button class=" dropdown-item "><i class=" mdi mdi-file-chart" ></i> générer un rapport </button>
+								<button  *ngIf="isAdmin"  class="dropdown-item" (click)="openModal(t.key.id)" ><i class="mdi mdi-account-hard-hat " ></i>Affecter</button>
+								<button *ngIf="!isAdmin"	 class=" dropdown-item " ><i class=" mdi mdi-file-chart" ></i> générer un rapport </button>
 
-								<button class=" dropdown-item " style="color:rgb(255, 36, 36)" (click)="cloturerChantier(t.key.id)"><i class=" mdi mdi-close-circle-outline" ></i>Cloturer</button>
+								<button *ngIf="!isAdmin" class=" dropdown-item " style="color:rgb(255, 36, 36)" (click)="cloturerChantier(t.key.id)"><i class=" mdi mdi-close-circle-outline" ></i>Cloturer</button>
 
 							</div>
 						</div>
@@ -92,9 +92,10 @@
             </div>
         </div>
 	
-		
-    </div>
-	<div class="pagination">
+		<div *ngIf="chefProjetArray.length === 0" class="empty-list-message">
+			<p>Aucun chantier disponible</p>
+		  </div>   
+	<div *ngIf="chefProjetArray.length !== 0"  class="pagination">
 		<pagination-controls (pageChange)="page = $event"></pagination-controls>
 	  </div>
 

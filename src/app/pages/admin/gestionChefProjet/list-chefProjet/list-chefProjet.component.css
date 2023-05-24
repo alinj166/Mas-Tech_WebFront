@@ -163,3 +163,12 @@ table.table .avatar {
     margin-top: 10px;
     font-size: 13px;
 }
+.empty-list-message {
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    padding: 40px;
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+    margin-top: 10px;
+  }

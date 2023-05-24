@@ -80,7 +80,10 @@
             </table>
          
         </div>
-        <div class="pagination">
+        <div *ngIf="chefProjets.length === 0" class="empty-list-message">
+			<p>Aucun Chef de projet disponible</p>
+		  </div>  
+        <div  *ngIf="chefProjets.length !== 0" class="pagination">
             <pagination-controls (pageChange)="pageChefProjet = $event"></pagination-controls>
           </div>
     </div>

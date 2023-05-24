@@ -24,7 +24,7 @@ export class ApiService {
 
     this.headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `${token}`
+      'authorization': `${token}`,
     });
 
     this.requestOptions = { headers: this.headers };
@@ -78,17 +78,15 @@ public getChefProjetById(id:any):Observable <Utilisateur> {
 // Add ChefProjet
 public addChefProjet(service:Utilisateur):Observable <Utilisateur> {
   return this.http.post<Utilisateur>(URL+'/chefProjets/register',service,this.requestOptions) 
-   
 }
 // Add ChefProjet
 public addChefChantier(service:any):Observable <Utilisateur> {
-  return this.http.post<Utilisateur>(URL+'/chefChantiers/register',service,this.requestOptions) 
-   
+  return this.http.post<Utilisateur>(URL+'/chefChantiers/register',service,this.requestOptions)   
 }
 
 // put Account
 public  putAccount(service:any,id:any):Observable <Utilisateur> {
-  return this.http.put<Utilisateur>(URL+'/auth/'+id,service,this.requestOptions);
+  return this.http.put<Utilisateur>(URL+'/accounts/'+id,service,this.requestOptions);
 }
 // put ChefProjet
 public  putChefProjet(service:any,id:any):Observable <Utilisateur> {
@@ -101,19 +99,17 @@ public putChefChantier(service:any,id:any):Observable <Utilisateur> {
 
 // Delete chefProjet
  public deleteChefProjet(id:number){
-  return this.http.delete<Utilisateur>(URL+'/chefProjets/'+id,this.requestOptions );
-
+  return this.http.delete<Utilisateur>(URL+'/chefProjets/'+id,this.requestOptions);
 }
 // Delete chefChantier
 public deleteChefChantier(id: number | undefined) {
   return this.http.delete<Utilisateur>(URL+'/chefChantiers/'+id,this.requestOptions );
-
 }
-// Get ALL Chantiers by chef
-public getAllChantierByChef(id:any):Observable <Chantier[]> {
+// Get ALL Chantiers by chefProjet
+public getAllChantierByChefProjet(id:any):Observable <Chantier[]> {
   return this.http.get<Chantier[]>(URL+'/chefProjets/'+id+'/chantiers',this.requestOptions);
 }
-// Get ALL Chantiers by chef
+// Get ALL Etage by chantier
 public getAllEtageByChantier(id:any):Observable <Etage[]> {
   return this.http.get<Etage[]>(URL+'/chantiers/'+id+'/etages',this.requestOptions);
 }

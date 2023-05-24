@@ -5,22 +5,25 @@ import { ApiService } from 'src/app/services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Utilisateur } from 'src/app/models/utilisateur';
 import { ModalBoxComponent } from '../modal-box/modal-box.component';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-list-chantier',
   templateUrl: './list-chantier.component.html',
   styleUrls: ['./list-chantier.component.css'],
 })
-export class ListProjetComponent implements OnInit {
-  constructor(private toastr:ToastrService,private api: ApiService,private modalService: NgbModal) { }
+export class ListChantierComponent implements OnInit {
+  constructor(private toastr:ToastrService,private api: ApiService,private modalService: NgbModal,private token:TokenStorageService) { }
   Chantiers: Chantier[] = [];
   listChefProjet: Utilisateur[] = [];
   chefProjetArray: { key: Chantier; value: Utilisateur | null}[] = [];
-
   pageSize= 6; // the number of items per page
   page = 1; 
+  isAdmin=this.token.isAdmin() 
   ngOnInit(): void {
-    //Get all Projet
+    if (this.isAdmin)//Verif if the user is Admin or not 
+    {
+    //Get all chantier
     let i=-1
     this.api.getAllChantier().subscribe((data) => {
       data.forEach(chantier => {
@@ -29,9 +32,7 @@ export class ListProjetComponent implements OnInit {
       this.api.getChefProjetById(chantier.UtilisateurId).subscribe((res)=>
         {   this.chefProjetArray.push( { key: chantier, value: res}) // Store etage  and chefProjet 
 
-
           } 
-   
          )
          else if (!chantier.UtilisateurId) {
           this.chefProjetArray[i]={ key: chantier, value: null}
@@ -40,9 +41,31 @@ export class ListProjetComponent implements OnInit {
     });
 
     });
+  }
+  else {  
+     //Get chantier by chefProjet
+     const id=this.token.getUser().id
+     let i=-1
+     this.api.getAllChantierByChefProjet(id).subscribe((data) => {
+       data.forEach(chantier => {
+         i++
+       if(chantier.UtilisateurId)
+       this.api.getChefProjetById(chantier.UtilisateurId).subscribe((res)=>
+         {   this.chefProjetArray.push( { key: chantier, value: res}) // Store etage  and chefProjet 
+ 
+           } 
+          )
+          else if (!chantier.UtilisateurId) {
+           this.chefProjetArray[i]={ key: chantier, value: null}
+          }
+ 
+     });
+ 
+     });
 
   }
-
+}
+//Open the modal box to affect user 
   openModal(idChantier:any) {
     const modalRef = this.modalService.open(ModalBoxComponent); // Open the modal    
     let foundKey: Chantier | null = null;
