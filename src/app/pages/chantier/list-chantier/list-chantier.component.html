@@ -1,12 +1,23 @@
-	<div class="table-title">
-		<div class="row">
-			<div class="col-sm-6">
-				<h2>Gestion <b>des Chantiers</b></h2>
-			</div>
-		
+<div class="table-title">
+	<div class="row">
+	  <div class="col-sm-10">
+		<h2>Gestion <b>des Chantiers</b></h2>
+	  </div>
+	  <div class="col-sm-2">
+		<div class="input-group input-group-md search-bar" >
+		  <div class="input-group-prepend">
+			<span class="input-group-text">
+			  <i class="mdi mdi-magnify"></i>
+			</span>
+		  </div>
+		  <input class="form-control" type="text" placeholder="Rechercher" #myInput [(ngModel)]="nomRechercher" (input)="serach()" />
 		</div>
+	  </div>
 	</div>
+  </div>
+
     <div class="row">
+		
         <div *ngFor="let t of chefProjetArray| paginate: { itemsPerPage: pageSize, currentPage: page }" class="col-md-4">
             <div class="card p-3 mb-2" >
                 <div class="d-flex justify-content-between">
@@ -48,7 +59,8 @@
 								<button  *ngIf="isAdmin"  class="dropdown-item" (click)="openModal(t.key.id)" ><i class="mdi mdi-account-hard-hat " ></i>Affecter</button>
 								<button *ngIf="!isAdmin"	 class=" dropdown-item " ><i class=" mdi mdi-file-chart" ></i> générer un rapport </button>
 
-								<button *ngIf="!isAdmin" class=" dropdown-item " style="color:rgb(255, 36, 36)" (click)="cloturerChantier(t.key.id)"><i class=" mdi mdi-close-circle-outline" ></i>Cloturer</button>
+								<button *ngIf="!isAdmin && !t.key.etat" class=" dropdown-item " style="color:rgb(255, 36, 36)" (click)="ChangerEtatChantier(t.key.id)"><i class=" mdi mdi-lock-outline" ></i>Cloturer</button>
+								<button *ngIf="!isAdmin && t.key.etat" class=" dropdown-item " style="color:rgb(3, 181, 3)" (click)="ChangerEtatChantier(t.key.id)"><i class=" mdi mdi-lock-open-variant-outline" ></i>Lancer</button>
 
 							</div>
 						</div>

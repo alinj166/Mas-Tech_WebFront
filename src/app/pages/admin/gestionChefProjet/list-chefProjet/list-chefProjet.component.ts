@@ -16,12 +16,31 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ListChefProjetComponent implements OnInit {
   constructor(private modalService: NgbModal,private toastr:ToastrService,private api: ApiService, private dialog: MatDialog) {}
   chefProjets: Utilisateur[] = [];
+  originalChefProjet: Utilisateur[]=[];
   chantiers: Chantier[] = [];
   pageSizeChefProjet= 5; // the number of items per page
   pageChefProjet = 1; 
-  
+  recherche!:string;
+
   ngOnInit(): void {
     this.getAllChefProjet();
+  }
+  serach() {
+    if (!this.originalChefProjet.length) {
+      this.originalChefProjet = this.chefProjets.slice();
+    }
+  
+    if (this.recherche !== "") {
+      this.chefProjets = this.originalChefProjet.filter((res) => {
+        let nom=res.nom?.toLocaleLowerCase().match(this.recherche.toLowerCase())
+        let prenom=res.prenom?.toLocaleLowerCase().match(this.recherche.toLowerCase())
+        let cin=res.cin?.toLocaleLowerCase().match(this.recherche.toLowerCase())
+
+        return cin ||nom||prenom;
+      });
+    } else {
+      this.chefProjets = this.originalChefProjet;
+    }
   }
   //Delete chefProjet
   DeleteChefProjet(id: any) {

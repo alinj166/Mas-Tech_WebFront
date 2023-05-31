@@ -1,10 +1,10 @@
 <div class="align-center">
-  <h2>User Login</h2>
+  <h2>Connexion </h2>
   <form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
     <input
-      placeholder="Email Id"
+      placeholder= "Carte d'Identité Nationale"
       type="text"
-      name="email"
+      name="cin"
       formControlName="cin"
     />
     <div class="alert alert-danger" *ngIf="cin && cin.invalid  && (cin.dirty || cin.touched)">

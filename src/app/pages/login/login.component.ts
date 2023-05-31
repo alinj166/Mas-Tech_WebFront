@@ -35,22 +35,27 @@ export class LoginComponent implements OnInit {
       next: (res:any) => {
         if (this.tokenService.getToken()!=null && this.tokenService.getUser()!=null)
         {
-          this.toastr.error('Utilisateur deja authentifié', 'Echoué');
+          this.toastr.error('Utilisateur deja authentifié.', 'Echoué');
         }
        else  if (this.tokenService.getToken()==null && this.tokenService.getUser()==null)
-          {   
+        {   
+        if (res.user.role!='chefChantier')
+        {
           this.tokenService.saveToken(res.token)
           this.tokenService.saveUser(res.user)
           this.toastr.success('login avec succés', 'Réussir');
-        if (res.user.role='Admin')
+          if (res.user.role=='Admin')
           this.router.navigate(['./listChefProjet']);
 
-          if (res.user.role='chefProjet')
+          if (res.user.role=='chefProjet')
           this.router.navigate(['./listChantier']);
-          }
+        }
+          else if (res.user.role=='chefChantier')
+        this.toastr.error("L'utilisateur ne possède pas le droit d'accéder. ", 'Accès refusé');
+      }
       },
     
-      error: (err) => {
+      error: (err:any) => {
         const errorMessage = err.error.message; // Access the error message from the response
         this.toastr.error(errorMessage, 'Echoué');
       }

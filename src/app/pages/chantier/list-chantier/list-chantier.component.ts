@@ -13,7 +13,13 @@ import { TokenStorageService } from 'src/app/services/token-storage.service';
   styleUrls: ['./list-chantier.component.css'],
 })
 export class ListChantierComponent implements OnInit {
-  constructor(private toastr:ToastrService,private api: ApiService,private modalService: NgbModal,private token:TokenStorageService) { }
+  constructor(private toastr:ToastrService,private api: ApiService,private modalService: NgbModal,private token:TokenStorageService) { 
+
+
+
+  }
+  originalChefProjetArray: any[]=[];
+  nomRechercher!:string;
   Chantiers: Chantier[] = [];
   listChefProjet: Utilisateur[] = [];
   chefProjetArray: { key: Chantier; value: Utilisateur | null}[] = [];
@@ -65,6 +71,21 @@ export class ListChantierComponent implements OnInit {
 
   }
 }
+
+serach() {
+  if (!this.originalChefProjetArray.length) {
+    this.originalChefProjetArray = this.chefProjetArray.slice();
+  }
+
+  if (this.nomRechercher !== "") {
+    this.chefProjetArray = this.originalChefProjetArray.filter((res) => {
+      return res.key.nom?.toLocaleLowerCase().match(this.nomRechercher.toLowerCase());
+    });
+  } else {
+    this.chefProjetArray = this.originalChefProjetArray;
+  }
+}
+
 //Open the modal box to affect user 
   openModal(idChantier:any) {
     const modalRef = this.modalService.open(ModalBoxComponent); // Open the modal    
@@ -95,16 +116,25 @@ export class ListChantierComponent implements OnInit {
 
   }
 
-  //Cloturer Projet
-  cloturerChantier(id: any) {
+  //Changer l'etat du Chantier
+  ChangerEtatChantier(id: any) {
     this.api.cloturerChantier(id).subscribe({
       next: () => {
-        this.toastr.success( 'Chantier cloturer avec succés','Réussir');
         
         const foundChantier = this.chefProjetArray.find(e => e.key.id == id);
         if (foundChantier) {
+          if ( foundChantier.key.etat==false)
+          {
+          this.toastr.success( 'Chantier cloturer avec succés','Réussir');
           foundChantier.key.etat = true;
         }
+          else if ( foundChantier.key.etat==true)
+        {
+            this.toastr.success( 'Chantier lancer avec succés','Réussir');
+            foundChantier.key.etat = false;
+
+      }  
+      }
       },
       error: () => {
         this.toastr.error( "Error lorsque la cloturation du Chantier",'Echoué');

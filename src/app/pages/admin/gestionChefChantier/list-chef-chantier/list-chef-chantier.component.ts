@@ -17,11 +17,30 @@ export class ListChefChantierComponent implements OnInit {
 
   constructor(private modalService:NgbModal,private toastr:ToastrService,private api: ApiService, private dialog: MatDialog) { }
   chefChantiers:Utilisateur[] = [];
+  originalChefChantier: Utilisateur[]=[];
+
   pageSizechefChantier= 5; // the number of items per page
   pageChefChantier = 1;  
-
+  recherche!:string;
   ngOnInit(): void {
     this.getAllChefChantier();
+  }
+  serach() {
+    if (!this.originalChefChantier.length) {
+      this.originalChefChantier = this.chefChantiers.slice();
+    }
+  
+    if (this.recherche !== "") {
+      this.chefChantiers = this.originalChefChantier.filter((res) => {
+        let nom=res.nom?.toLocaleLowerCase().match(this.recherche.toLowerCase())
+        let prenom=res.prenom?.toLocaleLowerCase().match(this.recherche.toLowerCase())
+        let cin=res.cin?.toLocaleLowerCase().match(this.recherche.toLowerCase())
+
+        return cin ||nom||prenom;
+      });
+    } else {
+      this.chefChantiers = this.originalChefChantier;
+    }
   }
 
   //Delete chefChantier

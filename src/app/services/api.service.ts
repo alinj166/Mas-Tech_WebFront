@@ -20,10 +20,10 @@ export class ApiService {
   private requestOptions: { headers: HttpHeaders };
 
   constructor(private http: HttpClient, private tokenService: TokenStorageService) {
-    const token = this.tokenService.getToken(); // Replace with your actual token
+    const token = this.tokenService.getToken();
 
     this.headers = new HttpHeaders({
-      'Content-Type': 'application/json',
+      'Accept': '*/*',
       'authorization': `${token}`,
     });
 
